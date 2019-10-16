@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 // import token below
-const token = require("jsonwebtoken")
+const jwt = require("jsonwebtoken")
+const secret = require("../config/secrets.js")
 // import token above 
 
 const Users = require('../users/users-model.js');
@@ -51,12 +52,12 @@ function generateToken(user) {
     username: user.username, // tokens username 
     subject: user.id // token id
   }
-  const secret = "is it secret? is it safe?"
+  // const secret = This is now being done on line 60 (jwtSecret)
   const option = {
     expiresIn: "5d" // the amount of time it takes a token to expire 
   }
 
-  return jwt.sign(payload, secret, option)
+  return jwt.sign(payload, secret.jwtSecret, option)
 }
 
 
